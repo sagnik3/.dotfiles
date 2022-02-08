@@ -1,4 +1,4 @@
-" vim-bootstrap 2022-01-17 17:42:41
+" vim-bootstrap 2022-02-01 07:31:00
 
 "*****************************************************************************
 "" Vim-Plug core
@@ -10,8 +10,8 @@ else
   let curl_exists=expand('curl')
 endif
 
-let g:vim_bootstrap_langs = "c,javascript,python,rust,typescript"
-let g:vim_bootstrap_editor = "neovim"				" nvim or vim
+let g:vim_bootstrap_langs = "c,go,python,rust"
+let g:vim_bootstrap_editor = "nvim"				" nvim or vim
 let g:vim_bootstrap_theme = "gruvbox"
 let g:vim_bootstrap_frams = ""
 
@@ -80,9 +80,9 @@ Plug 'vim-scripts/c.vim', {'for': ['c', 'cpp']}
 Plug 'ludwig/split-manpage.vim'
 
 
-" javascript
-"" Javascript Bundle
-Plug 'jelera/vim-javascript-syntax'
+" go
+"" Go Lang Bundle
+Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 
 
 " python
@@ -111,17 +111,6 @@ Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 
-" typescript
-Plug 'leafgarland/typescript-vim'
-Plug 'HerringtonDarkholme/yats.vim'
-
-
-"coc/nvim
-" Use release branch (recommend)
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Or build from source code by using yarn: https://yarnpkg.com
-Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 
 "*****************************************************************************
 "*****************************************************************************
@@ -144,7 +133,9 @@ filetype plugin indent on
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
-set ttyfast
+"font 
+set guifont=SFMono:14
+
 
 "" Fix backspace indent
 set backspace=indent,eol,start
@@ -217,26 +208,15 @@ else
   let g:indentLine_faster = 1
 
   
-  if $COLORTERM == 'gnome-terminal'
-    set term=gnome-256color
-  else
-    if $TERM == 'xterm'
-      set term=xterm-256color
-    endif
-  endif
-  
 endif
 
-
-if &term =~ '256color'
-  set t_ut=
-endif
 
 
 "" Disable the blinking cursor.
 set gcr=a:blinkon0
 
-set scrolloff=3
+au TermEnter * setlocal scrolloff=0
+au TermLeave * setlocal scrolloff=3
 
 
 "" Status bar
@@ -487,14 +467,72 @@ autocmd FileType c setlocal tabstop=4 shiftwidth=4 expandtab
 autocmd FileType cpp setlocal tabstop=4 shiftwidth=4 expandtab
 
 
-" javascript
-let g:javascript_enable_domhtmlcss = 1
+" go
+" vim-go
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
 
-" vim-javascript
-augroup vimrc-javascript
+let g:go_list_type = "quickfix"
+let g:go_fmt_command = "goimports"
+let g:go_fmt_fail_silently = 1
+
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_space_tab_error = 0
+let g:go_highlight_array_whitespace_error = 0
+let g:go_highlight_trailing_whitespace_error = 0
+let g:go_highlight_extra_types = 1
+
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
+
+augroup completion_preview_close
   autocmd!
-  autocmd FileType javascript setl tabstop=4|setl shiftwidth=4|setl expandtab softtabstop=4
+  if v:version > 703 || v:version == 703 && has('patch598')
+    autocmd CompleteDone * if !&previewwindow && &completeopt =~ 'preview' | silent! pclose | endif
+  endif
 augroup END
+
+augroup go
+
+  au!
+  au Filetype go command! -bang A call go#alternate#Switch(<bang>0, 'edit')
+  au Filetype go command! -bang AV call go#alternate#Switch(<bang>0, 'vsplit')
+  au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
+  au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
+
+  au FileType go nmap <Leader>dd <Plug>(go-def-vertical)
+  au FileType go nmap <Leader>dv <Plug>(go-doc-vertical)
+  au FileType go nmap <Leader>db <Plug>(go-doc-browser)
+
+  au FileType go nmap <leader>r  <Plug>(go-run)
+  au FileType go nmap <leader>t  <Plug>(go-test)
+  au FileType go nmap <Leader>gt <Plug>(go-coverage-toggle)
+  au FileType go nmap <Leader>i <Plug>(go-info)
+  au FileType go nmap <silent> <Leader>l <Plug>(go-metalinter)
+  au FileType go nmap <C-g> :GoDecls<cr>
+  au FileType go nmap <leader>dr :GoDeclsDir<cr>
+  au FileType go imap <C-g> <esc>:<C-u>GoDecls<cr>
+  au FileType go imap <leader>dr <esc>:<C-u>GoDeclsDir<cr>
+  au FileType go nmap <leader>rb :<C-u>call <SID>build_go_files()<CR>
+
+augroup END
+
+" ale
+:call extend(g:ale_linters, {
+    \"go": ['golint', 'go vet'], })
 
 
 " python
@@ -534,10 +572,6 @@ au FileType rust nmap gd <Plug>(rust-def)
 au FileType rust nmap gs <Plug>(rust-def-split)
 au FileType rust nmap gx <Plug>(rust-def-vertical)
 au FileType rust nmap <leader>gd <Plug>(rust-doc)
-
-
-" typescript
-let g:yats_host_keyword = 1
 
 
 

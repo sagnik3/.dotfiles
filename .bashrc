@@ -105,11 +105,6 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-#deno stuff 
-export DENO_INSTALL="/home/sagnikc/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -122,5 +117,8 @@ if ! shopt -oq posix; then
 fi
 . "$HOME/.cargo/env"
 
+export PS1="sagnik3\[\e[31m\] \[\e[m\]\[\e[31m\]:\[\e[m\]\[\e[31m\]:\[\e[m\] \[\e[32m\]\w\[\e[m\] \[\e[34m\]»\[\e[m\]\n"
+
+export LSCOLORS=cxgxfxexbxegedabagacad
 
 
