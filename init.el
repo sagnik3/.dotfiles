@@ -20,12 +20,15 @@
 ;;add line numbers
 (global-display-line-numbers-mode 1)
 
-;;adding a inbuilt color theme in emacs
-(load-theme 'deeper-blue t)
+;;adding a custom color them
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+
+;;load custom theme
+(load-theme 'darcula t)
 
 
 ;;adding global hl-line mode
-(gloabl-hl-line-mode 1)
+(global-hl-line-mode 1)
 
 
 ;;some c config
