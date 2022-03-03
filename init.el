@@ -36,3 +36,10 @@
 
 ;; turn on electric pair mode for bracket pair matching
 (electric-pair-mode 1)
+
+;;python
+;;add indentation for 4 spaces
+(setq-default indent-tabs-mode nil)
+(defun indentk()
+  setq c-basic-offset 4
+  add-hook 'c-mode-hook' 'indentk)
