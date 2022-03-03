@@ -1,43 +1,38 @@
-;; @sagnik3 emacs config
-;; Dated: 26 Feb ,2022
+;; sagnik.3 's emacs config file
+;;made on Mar 3 ,2022
+;; configure features by setting variables
+;; enable or disbale features by calling functions
 
-;; make available package functions
+;; setting configuration varibales:- (setq inhibit-startup-message t) --> dont show the splash screen
+;; list of expressions (wrapped in parentheses) that represents "call" to a function named setq
 
-(require 'package)
+;; An expression is an unit of code that can be evaluated to produce an result. A list is an ordered collection of expression:symbols,varibales,lists. 
 
-;; add a new package source
-(customize-set-variable 'package-archives
-			(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")))
+(setq inhibit-startup-message t)
+;;disable bell in emacs
+(setq visible-bell t)
 
-;;initialize package list
-(package-initialize)
+;;remove old ui
 
-;; fetch the list of packages available
-(unless package-archive-contents
-  (package-refersh-contents))
+(menu-bar-mode -1)
+(tool-bar-mode -1)
 
-;; only evalaute this when compiling this file
-(eval-when-compile
-  ;;for each package on the list do
+;;add line numbers
+(global-display-line-numbers-mode 1)
 
-  (dolist (package '(use-package diminish bind-key))
-    ;;instsall if not yet installed
-    (unless (package-installed-p package)
-      (package-install package))
-    ;;require package making it available on the rest of the configuration
-    (require package)))
+;;adding a inbuilt color theme in emacs
+(load-theme 'deeper-blue t)
 
 
-;;magit for GIT interface
-(use-package magit
-    :ensure t
-    :bind ("C-c m s" . magit-status)) 
+;;adding global hl-line mode
+(gloabl-hl-line-mode 1)
 
-;; vscode dark theme : https://github.com/ianyepan/vscode-dark-plus-emacs-theme
 
-(use-package vscode-dark-plus-theme
-	     :ensure t
-	     :config
-	     (load-theme 'vscode-dark-plus t))
-       
-	     
+;;some c config
+
+;;setting "gnu" style indenting for c
+(setq c-default-style "linux"
+      c-basic-offset 4)
+
+;; turn on electric pair mode for bracket pair matching
+(electric-pair-mode 1)
