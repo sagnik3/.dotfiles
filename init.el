@@ -8,6 +8,26 @@
 
 ;; An expression is an unit of code that can be evaluated to produce an result. A list is an ordered collection of expression:symbols,varibales,lists. 
 
+;;add melpa
+(require 'package)
+(add-to-list 'package-archives
+	     '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+(package-refresh-contents)
+(custom-set-variables
+;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages (quote (geiser ##))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(setq geiser-mit-binary "/usr/local/bin/scheme")
+(setq geiser-active-implementations '(mit))
 (setq inhibit-startup-message t)
 ;;disable bell in emacs
 (setq visible-bell t)
