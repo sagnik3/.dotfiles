@@ -21,7 +21,7 @@
 
 
 ;;adding font and height
-(set-face-attribute 'default nil :font "JetBrains Mono " :height 160)
+(set-face-attribute 'default nil :font "JetBrains Mono " :height 120)
 
 ;;loading a temporary theme
 ;; (load-theme 'tango-dark)
