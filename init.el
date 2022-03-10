@@ -139,6 +139,10 @@
           (shell-command-to-string "opam config var bin")) "/ocp-indent"))
 (setq ocp-indent-config "strict_with=always,match_clause=4,strict_else=never")
 
+;;adding tuareg mode
+
+
+
 
 
 
@@ -146,3 +150,17 @@
 ;; Developement Setup --> Coq (Proof Master)
 ;; ==============================================
 ;;use proof genrela downloaded from elpa
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (proof-general magit blacken flycheck material-theme elpy better-defaults))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
