@@ -1,148 +1,166 @@
 ;; .emacs.d/init.el
+;; Sagnik's emacs config
 
-;; ===================================
-;; MELPA Package Support
-;; ===================================
-;; Enables basic packaging support
+;; basic editing and theme setup
+
+
+(setq inhibit-startup-message t)
+
+(scroll-bar-mode -1) ;disable visible scrollbar
+(tool-bar-mode -1) ;disable the toolbar
+(tooltip-mode -1) ; disable tooltips
+(set-fringe-mode 10) ;give some breathing room
+
+(menu-bar-mode -1) ;disable the menu bar
+
+;; setup the visible bell
+(setq visible-bell t)
+
+;;adding line numbers alwas
+(global-display-line-numbers-mode)
+
+
+;;adding font and height
+(set-face-attribute 'default nil :font "JetBrains Mono " :height 160)
+
+;;loading a temporary theme
+;; (load-theme 'tango-dark)
+;; using doom-themes ; refer below
+
+
+;;making escape quit prompts
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+
+;;adding MELPA support
 (require 'package)
 
-;; Adds the Melpa archive to the list of available repositories
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+			 ("org" . "https://orgmode.org/elpa/")
+			 ("elpa" . "https://elpa.gnu.org/packages/")))
 
-;; Initializes the package infrastructure
+;;init packages
 (package-initialize)
-
-;; If there are no archived package contents, refresh them
-(when (not package-archive-contents)
+(unless package-archive-contents
   (package-refresh-contents))
 
+;;Initialize use-package on non-Linux platform
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
 
-;; Installs packages
-;;
-;; myPackages contains a list of package names
-(defvar myPackages
-  '(better-defaults                 ;; Set up some better Emacs defaults
-    material-theme                  ;; Theme
-    elpy                             ;; emacs lisp python environmetn
-    flycheck                        ;;for on the fly syntax checking in python
-    blacken                         ;;black foramtting on save
-    magit                           ;;for git support 
-    proof-general                   ;;for coq proofs
-    )
-  )
+(require 'use-package)
+(setq use-package-always-ensure t)
 
-;; Scans the list in myPackages
-;; If the package listed is not already installed, install it
-(mapc #'(lambda (package)
-          (unless (package-installed-p package)
-            (package-install package)))
-      myPackages)
+;;;;;;;;;;;;;;;;;;;;;;
+;;; dont edit this part !!!!1
+;;;;;;;;;;;;;;;;;;;;;;
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (visual-fill-column org-bullets rainbow-delimiters doom-themes markdown-mode rust-mode doom-modeline ivy use-package proof-general  magit  blacken better-defaults))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; completion engine for emacs
+(use-package ivy
+  :diminish
+  :bind (("C-s" . swiper)
+         :map ivy-minibuffer-map
+         ("TAB" . ivy-alt-done)	
+         ("C-l" . ivy-alt-done)
+         ("C-j" . ivy-next-line)
+         ("C-k" . ivy-previous-line)
+         :map ivy-switch-buffer-map
+         ("C-k" . ivy-previous-line)
+         ("C-l" . ivy-done)
+         ("C-d" . ivy-switch-buffer-kill)
+         :map ivy-reverse-i-search-map
+         ("C-k" . ivy-previous-line)
+         ("C-d" . ivy-reverse-i-search-kill))
+  :config
+  (ivy-mode 1))
+
+;;adding custom theme
+(use-package doom-themes
+  :init (load-theme 'doom-dark+ t))
 
 
-;; ===================================
-;; Basic Customization
-;; ===================================
 
-(setq inhibit-startup-message t)    ;; Hide the startup message
-(load-theme 'material t)            ;; Load material theme
-(global-linum-mode t)               ;; Enable line numbers globally
-(set-face-attribute 'default nil :font "JetbrainsMono-11")
-(menu-bar-mode -1)                  ;;disable menu bar mode
-(tool-bar-mode -1)                  ;;disable tool bar mode
-
-
-;; User-Defined init.el ends here
-
-
-;; ====================================
-;; Development Setup --> Python
-;; ====================================
-;; Enable elpy
-
-(elpy-enable)
-
-;; User-Defined init.el ends here
-
-;; Enable Flycheck
-(when (require 'flycheck nil t)
-  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-  (add-hook 'elpy-mode-hook 'flycheck-mode))
-
-;; ==========================================
-;; Developement Setup --> C
-;; ==========================================
-
-(setq c-default-style "linux"
-      c-basic-offset 4)
-
-;;eletric pair mode
+;;brackets pair mode
 (electric-pair-mode 1)
+(setq electric-pair-preserve-balance nil)
+
+;;rainbow brackets 
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 
-;; ==============================================
-;; Developement Setup --> OCaml
-;;================================================
-;; install the following :- opam instsall caml-mode merlin opc-indent
-; shift tab to complete
-(global-set-key (kbd "S-<tab>") 'company-complete)
-
-; Shell, needed to get correct env
-(setq shell-command-switch "-lc")
-(setq explicit-bash-args '("--login" "-i"))
-
-; locate opam's site-lisp
-(setq opam-share
-      (substring (shell-command-to-string
-                  "opam config var share 2> /dev/null") 0 -1))
-(add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
-
-; Compilation mode
-(require 'compile)
-(setq compilation-scroll-output 'first-error)
-(setq compilation-always-kill t)
-(setq next-error-highlight t)
-
-; Company mode
-(require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
-(define-key company-active-map [tab] 'company-complete-selection)
-(setq company-idle-delay nil)
-
-; caml-mode
-(add-to-list 'auto-mode-alist '("\\.ml[iylp]?$" . caml-mode))
-(autoload 'caml-mode "caml" "Major mode for editing OCaml code." t)
-(autoload 'run-caml "inf-caml" "Run an inferior OCaml process." t)
-(autoload 'camldebug "camldebug" "Run ocamldebug on program." t)
-(add-to-list 'interpreter-mode-alist '("ocamlrun" . caml-mode))
-(add-to-list 'interpreter-mode-alist '("ocaml" . caml-mode))
-(if window-system
-    (progn
-      (require 'caml-font)
-      (set-face-foreground 'caml-font-doccomment-face "#cb4b16")))
-
-; merlin
-(require 'merlin)
-(require 'caml-types)
-(require 'merlin-company)
-;(add-to-list 'company-backends 'merlin-company-backend)
-(add-hook 'caml-mode-hook 'merlin-mode t)
-(setq merlin-use-auto-complete-mode 'easy)
-(setq merlin-command 'opam)
-(setq merlin-error-on-single-line t)
-
-; ocp-indent
-(require 'ocp-indent)
-(setq ocp-indent-path
-     (concat
-      (replace-regexp-in-string "\n$" ""
-          (shell-command-to-string "opam config var bin")) "/ocp-indent"))
-(setq ocp-indent-config "strict_with=always,match_clause=4,strict_else=never")
+;;doom-modeline for emacs
+;; also adding all the icons with it
+(use-package all-the-icons)
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :custom ((doom-modeline-height 15)))
 
 
 
+;;; Python Developement
 
-;; ==============================================
-;; Developement Setup --> Coq (Proof Master)
-;; ==============================================
-;;use proof genrela downloaded from elpa
+;;virtualenv setup
+
+(use-package pyvenv
+  :config
+  (pyvenv-mode 1))
+
+
+
+;; Rust Developement
+
+(require 'rust-mode)
+
+;; indentation for Rust mode
+(add-hook 'rust-mode-hook
+          (lambda () (setq indent-tabs-mode nil)))
+
+;; code formatting
+(setq rust-format-on-save t)
+
+;;prettifying
+(add-hook 'rust-mode-hook
+          (lambda () (prettify-symbols-mode)))
+
+
+;;markdown for writing better docs
+
+;;nicer heading bullets
+
+(use-package org-bullets
+  :after org
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("â" "â" "â" "â" "â" "â" "â")))
+
+
+;; org-mode visual-fill setup
+
+
+(defun efs/org-mode-visual-fill ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t)
+  (visual-fill-column-mode 1))
+
+(use-package visual-fill-column
+  :hook (org-mode . efs/org-mode-visual-fill))
+
