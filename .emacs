@@ -1,5 +1,3 @@
-
-
 ;; sagnik3's emacs config
 ;; mainly for haskell ,coq and other things for research
 ;; Made on Apr 24, 2022
@@ -63,7 +61,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (markdown-preview-mode markdown-mode doom-themes dracula-theme writeroom-mode))))
+    (rainbow-delimiters markdown-preview-mode markdown-mode doom-themes dracula-theme writeroom-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -75,5 +73,7 @@
 
 (load-theme 'doom-material t)
 
-(require 'rainbow-delimiters)
-(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+
+;; adding rainbow-delimiters-mode automatically
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
