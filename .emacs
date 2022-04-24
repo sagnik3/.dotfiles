@@ -61,7 +61,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (haskell-mode org-modern rainbow-delimiters markdown-preview-mode markdown-mode doom-themes dracula-theme writeroom-mode))))
+    (rust-mode go-mode haskell-mode org-modern rainbow-delimiters markdown-preview-mode markdown-mode doom-themes dracula-theme writeroom-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -77,3 +77,14 @@
 ;; adding rainbow-delimiters-mode automatically
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
+;; rustlang config
+;;TAB shoudl indent corectly
+(add-hook 'rust-mode-hook
+          (lambda () (setq indent-tabs-mode nil)))
+
+;;Code formatting on save  
+(setq rust-format-on-save t)
+
+;; Prettify on save
+(add-hook 'rust-mode-hook
+          (lambda () (prettify-symbols-mode)))
