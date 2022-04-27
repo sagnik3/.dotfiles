@@ -1,4 +1,4 @@
-x;; sagnik3's emacs config
+;; sagnik3's emacs config
 ;; mainly for haskell ,coq and other things for research
 ;; Made on Apr 24, 2022
 ;; start emacs using emacs -nw <filename>
@@ -20,7 +20,7 @@ x;; sagnik3's emacs config
 (set-default-font "Iosevka-12")
 
 ;; default theme --> some dark theme to not blind oneself
-(load-theme 'tango-dark)
+;;(load-theme 'tango-dark)
 ;;fallback theme when melpa not present in system or some error occured ;
 ;; else using the doom theme package 
 
@@ -61,7 +61,7 @@ x;; sagnik3's emacs config
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (elpy doom-modeline rust-mode go-mode org-modern rainbow-delimiters markdown-preview-mode markdown-mode doom-themes writeroom-mode))))
+    (doom-modeline rust-mode go-mode org-modern rainbow-delimiters markdown-preview-mode markdown-mode doom-themes writeroom-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -69,13 +69,6 @@ x;; sagnik3's emacs config
  ;; If there is more than one, they won't work right.
  )
 
-;;python3 config for emacs
-(elpy-enable)
-(add-hook 'python-mode-hook
-      (lambda ()
-        (setq indent-tabs-mode t)
-        (setq tab-width 4)
-        (setq python-indent-offset 4)))
 
 
 
@@ -276,7 +269,3 @@ x;; sagnik3's emacs config
 (setq doom-modeline-before-update-env-hook nil)
 (setq doom-modeline-after-update-env-hook nil)
 
-
-;; ocaml setup
-(add-to-list 'load-path "/home/sagnik/.opam/cs3110-2021fa/share/emacs/site-lisp")
-(require 'ocp-indent)
