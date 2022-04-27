@@ -1,4 +1,4 @@
-;; sagnik3's emacs config
+x;; sagnik3's emacs config
 ;; mainly for haskell ,coq and other things for research
 ;; Made on Apr 24, 2022
 ;; start emacs using emacs -nw <filename>
@@ -61,13 +61,23 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (doom-modeline rust-mode go-mode org-modern rainbow-delimiters markdown-preview-mode markdown-mode doom-themes  writeroom-mode))))
+    (elpy doom-modeline rust-mode go-mode org-modern rainbow-delimiters markdown-preview-mode markdown-mode doom-themes writeroom-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;;python3 config for emacs
+(elpy-enable)
+(add-hook 'python-mode-hook
+      (lambda ()
+        (setq indent-tabs-mode t)
+        (setq tab-width 4)
+        (setq python-indent-offset 4)))
+
+
 
 ;; Doom themes loading : https://github.com/doomemacs/themes
 
@@ -265,3 +275,8 @@
 ;; Hooks that run before/after the modeline version string is updated
 (setq doom-modeline-before-update-env-hook nil)
 (setq doom-modeline-after-update-env-hook nil)
+
+
+;; ocaml setup
+(add-to-list 'load-path "/home/sagnik/.opam/cs3110-2021fa/share/emacs/site-lisp")
+(require 'ocp-indent)
