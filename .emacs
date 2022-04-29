@@ -62,7 +62,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (tuareg doom-modeline rust-mode  org-modern rainbow-delimiters markdown-preview-mode markdown-mode doom-themes writeroom-mode))))
+    (horizon-theme tuareg doom-modeline rust-mode org-modern rainbow-delimiters markdown-preview-mode markdown-mode doom-themes writeroom-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -75,8 +75,8 @@
 
 ;; Doom themes loading : https://github.com/doomemacs/themes
 
-(load-theme 'doom-gruvbox t)
-
+(load-theme 'doom-horizon t)
+;;(load-theme 'horizon t)
 
 ;; adding rainbow-delimiters-mode automatically
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
