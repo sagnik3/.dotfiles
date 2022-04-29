@@ -1,6 +1,7 @@
 ;; sagnik3's emacs config
-;; mainly for haskell ,coq and other things for research
+;; mainly for rust,python and ocaml and markdown eiditing 
 ;; Made on Apr 24, 2022
+;; Latest update on Apr 29,2022
 ;; start emacs using emacs -nw <filename>
 
 
@@ -61,7 +62,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (tuareg doom-modeline rust-mode go-mode org-modern rainbow-delimiters markdown-preview-mode markdown-mode doom-themes writeroom-mode))))
+    (tuareg doom-modeline rust-mode  org-modern rainbow-delimiters markdown-preview-mode markdown-mode doom-themes writeroom-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
