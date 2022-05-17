@@ -1,10 +1,8 @@
 ## dotfiles
 
-My dotfiles.
+After using emacs for a year I am moving to vim.
 
-- Using [Iosevka](https://github.com/be5invis/Iosevka) as default programming font.
-	- Install the ttf font from releases and place in ~/.fonts.
-	- Do sudo fc-cache to add the changes.
+Imo, vim +vscode is best for reading code and editing.
 
-- [MELPA](https://melpa.org/#/getting-started) for setting up melpa for .emacs
+Shifting workflow to tmux+vim and vscode.
 
