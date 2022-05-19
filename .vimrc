@@ -21,14 +21,20 @@ Plug 'jiangmiao/auto-pairs'
 "space vim dark 
 Plug 'liuchengxu/space-vim-dark'
 
-"goconfig 
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#formatter = 'default'
+
+
+let g:airline_theme = 'base16'
 
 colorscheme space-vim-dark
+"colorscheme delek
 set termguicolors
-
 
