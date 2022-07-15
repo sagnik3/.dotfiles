@@ -21,8 +21,14 @@ Plug 'jiangmiao/auto-pairs'
 "space vim dark 
 Plug 'liuchengxu/space-vim-dark'
 
+"gruvbox dark theme 
+Plug 'morhetz/gruvbox'
+
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
+"vimwiki :- for note taking 
+Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
@@ -34,7 +40,13 @@ let g:airline#extensions#tabline#formatter = 'default'
 
 let g:airline_theme = 'distinguished'
 
-colorscheme space-vim-dark
-"colorscheme delek
-set termguicolors
+"colorscheme space-vim-dark
+colorscheme gruvbox
+let g:gruvbox_contrast_dark="medium"
 
+set laststatus=2
+set termguicolors
+set clipboard=unnamedplus,unnamed,autoselect
+
+"vimwiki config 
+let g:vimwiki_list = [{'path': '~/Documents/notes/', 'syntax': 'markdown', 'ext': '.md'}]
