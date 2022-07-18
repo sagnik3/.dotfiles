@@ -30,6 +30,10 @@ Plug 'vim-airline/vim-airline-themes'
 "vimwiki :- for note taking 
 Plug 'vimwiki/vimwiki'
 
+"coc-nvim // for adding some form of autocompletion 
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 call plug#end()
 
 let g:airline#extensions#tabline#enabled = 1
