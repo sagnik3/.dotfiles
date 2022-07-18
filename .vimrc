@@ -34,6 +34,20 @@ Plug 'vimwiki/vimwiki'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+
+" Better syntax-highlighting for filetypes in vim
+Plug 'sheerun/vim-polyglot'
+
+" Git integration
+Plug 'tpope/vim-fugitive'
+
+" Switch to the begining and the end of a block by pressing %
+Plug 'tmhedberg/matchit'
+
+" Comment/Uncomment tool
+Plug 'scrooloose/nerdcommenter'
+
+
 call plug#end()
 
 let g:airline#extensions#tabline#enabled = 1
@@ -62,3 +76,5 @@ set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
 map <F9> :make<Return>:copen<Return>
 map <F10> :cprevious<Return>
 map <F11> :cnext<Return>
+
+
