@@ -104,3 +104,5 @@ setopt autocd
 
 export TERM=xterm-256color
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
+
