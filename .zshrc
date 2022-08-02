@@ -104,5 +104,11 @@ setopt autocd
 
 export TERM=xterm-256color
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
-export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
 
+eval "$(pyenv init -)"
+
+export PATH="/opt/homebrew/opt/mysql-client/bin:$PATH"
+
+export PATH=/Users/sagnik3/.tiup/bin:$PATH
+
+export PATH="$HOME/custom/platform-tools:$PATH"

@@ -35,7 +35,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 
-" Better syntax-highlighting for filetypes in vim
+"" Better syntax-highlighting for filetypes in vim
 Plug 'sheerun/vim-polyglot'
 
 " Git integration
